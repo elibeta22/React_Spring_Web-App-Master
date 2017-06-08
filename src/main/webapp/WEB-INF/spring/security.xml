@@ -1,0 +1,26 @@
+<b:beans xmlns="http://www.springframework.org/schema/security"
+         xmlns:b="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <http>
+        <intercept-url pattern="/login" access="permitAll"/>
+        <intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+
+
+        <form-login
+                login-page="/login"
+                login-processing-url="/j_spring_security_check.action"
+                default-target-url="/person"
+                authentication-failure-url="/login?error"/>
+        <logout logout-success-url="/login?logout" />
+        <!-- enable csrf protection -->
+        <csrf/>
+    </http>
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="customUserDetailsService"/>
+    </authentication-manager>
+
+</b:beans>
