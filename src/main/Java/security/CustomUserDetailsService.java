@@ -24,8 +24,9 @@ public class CustomUserDetailsService implements UserDetailsService{
 
 @Autowired
 public CustomUserDetailsService(UserRepository userRepository,UserRolesRepository userRolesRepository) {
-this.userRepository = userRepository;
-this.userRolesRepository=userRolesRepository;
+    this.userRepository = userRepository;
+    this.userRolesRepository=userRolesRepository;
+
 }
 
 @Override
@@ -36,9 +37,12 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
         throw new UsernameNotFoundException("No user present with username: "+username);
     }else{
         List<String> userRoles=userRolesRepository.findRoleByUserName(username);
+        LOG.info(userRoles.toString());
         return new CustomUserDetails(user,userRoles);
 
+
     }
+
 }
 
 }
